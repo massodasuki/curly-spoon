@@ -1,0 +1,20 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  elesen_mysql:
+    image: mysql:8.0
+    container_name: mysql_elesen
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: elesen2024
+      MYSQL_USER: appLesen
+      MYSQL_PASSWORD: lesen2024
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

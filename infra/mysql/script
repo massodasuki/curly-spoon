@@ -1,0 +1,171 @@
+-- elesenMobileV2.pemeriksaan_vesel definition
+
+CREATE TABLE `pemeriksaan_vesel` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `no_tetap_vesel` varchar(20) NOT NULL,
+  `pangkalan` varchar(100) NOT NULL,
+  `deleted_at` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- elesenMobileV2.alat_keselamatan definition
+
+CREATE TABLE `alat_keselamatan` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `pemeriksaan_vesel_id` bigint unsigned NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `ada` tinyint(1) NOT NULL,
+  `keadaan` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pemeriksaan_vesel_id` (`pemeriksaan_vesel_id`),
+  CONSTRAINT `alat_keselamatan_ibfk_1` FOREIGN KEY (`pemeriksaan_vesel_id`) REFERENCES `pemeriksaan_vesel` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- elesenMobileV2.butiran_enjin definition
+
+CREATE TABLE `butiran_enjin` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `pemeriksaan_vesel_id` bigint unsigned NOT NULL,
+  `jenama` varchar(50) NOT NULL,
+  `model` varchar(50) NOT NULL,
+  `kuasa_kuda` int NOT NULL,
+  `no_enjin` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pemeriksaan_vesel_id` (`pemeriksaan_vesel_id`),
+  CONSTRAINT `butiran_enjin_ibfk_1` FOREIGN KEY (`pemeriksaan_vesel_id`) REFERENCES `pemeriksaan_vesel` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- elesenMobileV2.butiran_vesel definition
+
+CREATE TABLE `butiran_vesel` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `pemeriksaan_vesel_id` bigint unsigned NOT NULL,
+  `panjang` decimal(5,2) NOT NULL,
+  `lebar` decimal(5,2) NOT NULL,
+  `dalam` decimal(5,2) NOT NULL,
+  `muatan_grt` decimal(6,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pemeriksaan_vesel_id` (`pemeriksaan_vesel_id`),
+  CONSTRAINT `butiran_vesel_ibfk_1` FOREIGN KEY (`pemeriksaan_vesel_id`) REFERENCES `pemeriksaan_vesel` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- elesenMobileV2.keadaan_vesel definition
+
+CREATE TABLE `keadaan_vesel` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `pemeriksaan_vesel_id` bigint unsigned NOT NULL,
+  `struktur` varchar(50) NOT NULL,
+  `jenis` varchar(50) NOT NULL,
+  `jenis_kulit` varchar(50) NOT NULL,
+  `tarikh_pemeriksaan` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pemeriksaan_vesel_id` (`pemeriksaan_vesel_id`),
+  CONSTRAINT `keadaan_vesel_ibfk_1` FOREIGN KEY (`pemeriksaan_vesel_id`) REFERENCES `pemeriksaan_vesel` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- elesenMobileV2.nakhoda definition
+
+CREATE TABLE `nakhoda` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `pemeriksaan_vesel_id` bigint unsigned NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `ic` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pemeriksaan_vesel_id` (`pemeriksaan_vesel_id`),
+  CONSTRAINT `nakhoda_ibfk_1` FOREIGN KEY (`pemeriksaan_vesel_id`) REFERENCES `pemeriksaan_vesel` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- elesenMobileV2.penandaan_vesel definition
+
+CREATE TABLE `penandaan_vesel` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `pemeriksaan_vesel_id` bigint unsigned NOT NULL,
+  `ditebuk` tinyint(1) NOT NULL,
+  `dicat_terang` tinyint(1) NOT NULL,
+  `di_bumbung` tinyint(1) NOT NULL,
+  `penukul_besi` tinyint(1) NOT NULL,
+  `kod_penukul` varchar(10) DEFAULT NULL,
+  `tin_plate` tinyint(1) NOT NULL,
+  `no_tin_plate` varchar(20) DEFAULT NULL,
+  `paku_penanda` tinyint(1) NOT NULL,
+  `rumah_kemudi_dicat` tinyint(1) NOT NULL,
+  `kod_zon` varchar(10) DEFAULT NULL,
+  `mppl` tinyint(1) NOT NULL,
+  `di_bumbung_rumah` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pemeriksaan_vesel_id` (`pemeriksaan_vesel_id`),
+  CONSTRAINT `penandaan_vesel_ibfk_1` FOREIGN KEY (`pemeriksaan_vesel_id`) REFERENCES `pemeriksaan_vesel` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- elesenMobileV2.peralatan_menangkap definition
+
+CREATE TABLE `peralatan_menangkap` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `pemeriksaan_vesel_id` bigint unsigned NOT NULL,
+  `gps` tinyint(1) NOT NULL,
+  `echo_sounder` tinyint(1) NOT NULL,
+  `radar` tinyint(1) NOT NULL,
+  `atur` tinyint(1) NOT NULL,
+  `net_hauler` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pemeriksaan_vesel_id` (`pemeriksaan_vesel_id`),
+  CONSTRAINT `peralatan_menangkap_ibfk_1` FOREIGN KEY (`pemeriksaan_vesel_id`) REFERENCES `pemeriksaan_vesel` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- elesenMobileV2.peralatan_tambahan_tambahan definition
+
+CREATE TABLE `peralatan_tambahan_tambahan` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `pemeriksaan_vesel_id` bigint unsigned NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pemeriksaan_vesel_id` (`pemeriksaan_vesel_id`),
+  CONSTRAINT `peralatan_tambahan_tambahan_ibfk_1` FOREIGN KEY (`pemeriksaan_vesel_id`) REFERENCES `pemeriksaan_vesel` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- elesenMobileV2.peralatan_tambahan_utama definition
+
+CREATE TABLE `peralatan_tambahan_utama` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `pemeriksaan_vesel_id` bigint unsigned NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pemeriksaan_vesel_id` (`pemeriksaan_vesel_id`),
+  CONSTRAINT `peralatan_tambahan_utama_ibfk_1` FOREIGN KEY (`pemeriksaan_vesel_id`) REFERENCES `pemeriksaan_vesel` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- elesenMobileV2.pukat_tunda definition
+
+CREATE TABLE `pukat_tunda` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `pemeriksaan_vesel_id` bigint unsigned NOT NULL,
+  `jalur_putih` tinyint(1) NOT NULL,
+  `dicat_terang` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pemeriksaan_vesel_id` (`pemeriksaan_vesel_id`),
+  CONSTRAINT `pukat_tunda_ibfk_1` FOREIGN KEY (`pemeriksaan_vesel_id`) REFERENCES `pemeriksaan_vesel` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- elesenMobileV2.vessel_owner definition
+
+CREATE TABLE `empunya_vesel` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `pemeriksaan_vesel_id` bigint unsigned NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `ic` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pemeriksaan_vesel_id` (`pemeriksaan_vesel_id`),
+  CONSTRAINT `empunya_vesel_ibfk_1` FOREIGN KEY (`pemeriksaan_vesel_id`) REFERENCES `pemeriksaan_vesel` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
